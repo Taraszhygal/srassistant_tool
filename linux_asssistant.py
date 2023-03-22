@@ -3,18 +3,20 @@ import sys
 import subprocess 
 from   subprocess import check_call, CalledProcessError, STDOUT
 import os
+import importlib
+
 
 
 def install():
     print("Installing...")
     # implement pip as a subprocess:
     try:
-        subprocess.check_call([sys.executable, '-m', 'pip3', 'install', 'vosk'])
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'vosk'])
         # process output with an API in the subprocess module:
         reqs = subprocess.check_output([sys.executable, '-m', 'pip','freeze'])
         installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
         print(installed_packages)
-        subprocess.check_call(['apt-get', 'install', '-y', 'filetoinstall'], stdout=open(os.devnull,'wb'), stderr=STDOUT) 
+        subprocess.check_call(['apt-get', 'install', '-y', 'python3-pyaudio'], stdout=open(os.devnull,'wb'), stderr=STDOUT) 
     except CalledProcessError as e:
         print(e.output)
 
