@@ -49,12 +49,14 @@ def start():
     recognizer = kr (ukrm, 16000)
     
     #recognize micro
-    cap = pyaudio.Pyaudio()
+    cap = pyaudio.PyAudio()
     stream = cap.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
     stream.start_stream()
     while True:
         data = stream.read(4096)
         if recognizer.AcceptWaveform(data):
+            for key, value in recognizer.Result():
+                print(value)
             print(recognizer.Result())
         
         
