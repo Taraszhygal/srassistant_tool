@@ -55,9 +55,9 @@ def start():
     while True:
         data = stream.read(4096)
         if recognizer.AcceptWaveform(data):
-            for key, value in recognizer.Result():
-                print(value)
-            print(recognizer.Result())
+            res = recognizer.Result()
+            json = json.loads(res)
+            print(json["text"])
         
         
 
