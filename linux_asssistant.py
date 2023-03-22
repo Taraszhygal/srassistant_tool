@@ -4,7 +4,16 @@ import subprocess
 from   subprocess import check_call, CalledProcessError, STDOUT
 import os
 import importlib
-from tarfile import RECORDSIZE
+import json
+
+app_map = {
+    'офіс': 'libreoffice',
+    'пошта': 'thunderbird',
+    'редактор': 'vi',
+    'календар': 'gnome-calendar',
+    'калькулятор': 'gnome-calculator',
+    'ігри': 'gnome-mines',
+}
 
 def runcmd(cmd, verbose = False, *args, **kwargs):
 
@@ -56,12 +65,31 @@ def start():
         data = stream.read(4096)
         if recognizer.AcceptWaveform(data):
             res = recognizer.Result()
-            json = json.loads(res)
-            print(json["text"])
+            parser = json.loads(res)
+            text = (parser["text"])
+            app_name = search_map_for_substring(text, app_map)
+            run_app(app_name)
+ 
+def search_map_for_substring(search_string, map_dict):
+    for key in map_dict:
+        if key in search_string:
+            return map_dict[key]
+    return ""
+
+def run_app(app_name):
+    try:
+        if app_name != "":
+            print("Opeping " + str(app_name) + " app")
+            runcmd(app_name) 
+        pass
+    except Exception as e:
+        print("App: " + str(app_name) + " not found")
+    finally:
+        pass
         
         
 
-if __name__ == '__main__':
+if name == '__main__':
     parser = argparse.ArgumentParser(description="Install and start application")
     parser.add_argument('--install', action='store_true', help='Install required dependensies')
     parser.add_argument('--start', default=None, help='Command recognition assistant started')
