@@ -16,11 +16,18 @@ def install():
         reqs = subprocess.check_output([sys.executable, '-m', 'pip','freeze'])
         installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
         print(installed_packages)
-        subprocess.check_call(['apt-get', 'install', '-y', 'python3-pyaudio'], stdout=open(os.devnull,'wb'), stderr=STDOUT) 
+        subprocess.check_call(['apt-get', 'install', '-y', 'python3-pyaudio unzip'], stdout=open(os.devnull,'wb'), stderr=STDOUT) 
+        print("pyaudio installed")
+        #download ukr model audio semple
+        subprocess.check_call(['wget', 'https://alphacephei.com/vosk/models/vosk-model-small-uk-v3-nano.zip'], stderr=STDOUT)
+        subprocess.check_call(['unzip', 'vosk-model-small-uk-v3-nano.zip'], stderr=STDOUT)
     except CalledProcessError as e:
         print(e.output)
 
 def start():
+    vosk = importlib.import_module('vosk')
+    model = getattr(vosk, 'Model')
+    kr = getattr(vosk, 'KaldiRecognizer')
     while True:
         print("Starting...")
 
