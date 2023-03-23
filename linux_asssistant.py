@@ -8,7 +8,7 @@ import json
 
 app_map = {
     'офіс': 'libreoffice',
-    'пошта': 'thunderbird',
+    'пошту': 'thunderbird',
     'редактор': 'vi',
     'календар': 'gnome-calendar',
     'калькулятор': 'gnome-calculator',
@@ -39,10 +39,11 @@ def install():
         installed_packages = [r.decode().split('==')[0] for r in reqs.split()]
         print(installed_packages)
         runcmd('apt install -y python3-pyaudio unzip') 
-        #print("pyaudio installed")
-        #download ukr model audio semple
+        print("pyaudio unzip  installed")
+        #download ukr model audio semples
+        print("Vosk model for Ukr\nDownloading ...")
         runcmd('wget https://alphacephei.com/vosk/models/vosk-model-small-uk-v3-nano.zip')
-        runcmd('unzip vosk-model-small-uk-v3-nano.zip && rm vosk-model-small-uk-v3-nano.zip')
+        runcmd('unzip vosk-model-small-uk-v3-nano.zip && rm vosk-model-small-uk-v3-nano.zip*')
     except CalledProcessError as e:
         print(e.output)
 
