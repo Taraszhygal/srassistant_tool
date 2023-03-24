@@ -13,6 +13,7 @@ app_map = {
     'календар': 'gnome-calendar',
     'калькулятор': 'gnome-calculator',
     'ігри': 'gnome-mines',
+    'зупинись': 'exit()'
 }
 
 def runcmd(cmd, verbose = False, *args, **kwargs):
@@ -93,7 +94,7 @@ def run_app(app_name):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Install and start application")
     parser.add_argument('--install', action='store_true', help='Install required dependensies')
-    parser.add_argument('--start', default=None, help='Command recognition assistant started')
+    parser.add_argument('--start',  action='store_true', help='Command recognition assistant started')
 
     args = parser.parse_args()
 
