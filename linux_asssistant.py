@@ -80,6 +80,8 @@ def search_map_for_substring(search_string, map_dict):
 
 def run_app(app_name):
     try:
+        if app_name == "зупинись":
+            sys.exit()
         if app_name != "":
             print("Opeping " + str(app_name) + " app")
             runcmd(app_name) 
